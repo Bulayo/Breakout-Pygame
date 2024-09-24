@@ -1,4 +1,5 @@
-import pygame, pytmx
+import pygame
+from os.path import join
 
-WIDTH = 500
+WIDTH = 520
 HEIGHT = 500
