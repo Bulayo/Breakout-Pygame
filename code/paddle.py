@@ -9,9 +9,10 @@ class Paddle(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
         self.speed = 200
 
-    def update(self, delta_time):
+
+    def update(self, dt):
         self.input()
-        self.move(delta_time)
+        self.move(dt)
         self.bounds()
 
     def input(self):

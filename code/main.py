@@ -2,6 +2,7 @@ from settings import *
 from levels import *
 from bricks import Brick
 from paddle import Paddle
+from ball import Ball
 
 class Game:
     
@@ -14,6 +15,7 @@ class Game:
         # Images
         self.brick_list = [pygame.image.load(join("assets", f"Brick{i}.png")) for i in range(1, 6)]
         self.paddle_img = pygame.image.load(join("assets", "paddle.png"))
+        self.ball_img = pygame.image.load(join("assets", "ball.png"))
 
         # Groups
         self.brick_group = pygame.sprite.Group()
@@ -24,7 +26,9 @@ class Game:
         self.levels = {1: level_1}
         self.current_level = 1
 
-        Paddle(self.paddle_group, (WIDTH / 2, 470), self.paddle_img)
+        # Objects
+        self.player = Paddle(self.paddle_group, (WIDTH / 2, 470), self.paddle_img)
+
 
     def run(self):
 
@@ -52,15 +56,16 @@ class Game:
 
         pygame.quit()
 
+
     def load_level(self):
-        if len(self.brick_group) < 43: 
+        if len(self.brick_group) < 1 + len(self.levels[self.current_level]): 
             self.row = 1
             for row in self.levels[self.current_level]:
                 self.column = 1
                 for tile in row:
                     if tile == 1:
                         Brick(self.brick_group, (self.column * 60, self.row * 40), self.brick_list[0])
-                    
+
                     elif tile == 2:
                         Brick(self.brick_group, (self.column * 60, self.row * 40), self.brick_list[1])
 
@@ -72,6 +77,10 @@ class Game:
 
                     elif tile == 5:
                         Brick(self.brick_group, (self.column * 60, self.row * 40), self.brick_list[4])
+
+                    elif tile == 6:
+                        Ball(self.ball_group, (WIDTH / 2, 400), self.ball_img, (self.brick_group, self.paddle_group))
+                        
 
                     self.column += 1
                 self.row += 1
